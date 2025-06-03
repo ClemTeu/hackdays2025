@@ -6,19 +6,26 @@ import { WiStars } from 'react-icons/wi';
 import {fetchSyncedProjects, type SyncedProject} from '../api/syncedProjects';
 import React from "react";
 import { generateAndSaveProject } from '../api/ia';
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
 export const SyncedProjectsPanel = observer(({ store }) => {
   const [projects, setProjects] = React.useState<SyncedProject[]>([]);
   const [searchTerm, setSearchTerm] = React.useState('');
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const [prompt, setPrompt] = React.useState('Fais une présentation sur le bac de Français');
+  const [showSpinner, setShowSpinner] = React.useState(false);
 
   async function loadProjects() {
     try {
+      setShowSpinner(true);
       const data = await fetchSyncedProjects();
       setProjects(data.filter((project) =>
           project.filename.toLowerCase().includes(searchTerm.toLowerCase())
       ));
     } catch (error) {
       console.error('Erreur lors du chargement des projets synchronisés:', error);
+    } finally {
+      setShowSpinner(false);
     }
   }
 
@@ -45,13 +52,10 @@ export const SyncedProjectsPanel = observer(({ store }) => {
     }
   };
 
-  const [isModalOpen, setIsModalOpen] =  React.useState(false);
-  const [prompt, setPrompt] =  React.useState('Fais une présentation sur le bac de Français');
-  const [isLoading, setIsLoading] = React.useState(false);
-
   const handleCreateWithAI = async () => {
     try {
-      setIsLoading(true);
+      setShowSpinner(true);
+      setIsModalOpen(false);
       console.log('Prompt saisi :', prompt);
       await generateAndSaveProject(prompt, store);
       await loadProjects();
@@ -60,13 +64,31 @@ export const SyncedProjectsPanel = observer(({ store }) => {
       console.error('Erreur lors de la génération du projet avec l\'IA :', error);
       alert('Une erreur est survenue lors de la génération du projet.');
     } finally {
-      setIsLoading(false);
-      setIsModalOpen(false);
+      setShowSpinner(false);
     }
   };
 
   return (
       <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+        {showSpinner && (
+            <div style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              backgroundColor: 'rgba(0, 0, 0, 0.5)',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              zIndex: 10,
+            }}>
+              <div style={{ textAlign: 'center', color: 'white', marginTop: '20px', fontSize: '24px' }}>
+                <DotLottieReact src="https://lottie.host/5ddf4fbb-2a7b-4034-95de-7435418e9d75/jUlSaalll6.lottie" loop autoplay style={{ width: '500px' }} />
+                <p>Génération en cours ...</p>
+              </div>
+            </div>
+        )}
 
         <Button
             intent="success"
@@ -89,7 +111,6 @@ export const SyncedProjectsPanel = observer(({ store }) => {
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
             />
-            {isLoading && <div className="loader">Chargement...</div>}
           </div>
           <div className="bp4-dialog-footer">
             <div className="bp4-dialog-footer-actions">

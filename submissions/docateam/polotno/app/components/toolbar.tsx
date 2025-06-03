@@ -8,7 +8,7 @@ const ActionControls = ({ store }) => {
   const saveProject = async () => {
     try {
       await syncProject({
-        filename: 'bac_francais.json',
+        filename: 'bac_de_francais.json',
         file: JSON.stringify(store.toJSON()),
       })
       alert('Projet sauvegardé avec succès dans Fichiers !');

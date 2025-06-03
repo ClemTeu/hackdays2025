@@ -3,14 +3,16 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "partykit dev --live",
+    "dev": "partykit dev --live --port 1999",
     "deploy": "partykit deploy"
   },
   "dependencies": {
+    "@lottiefiles/dotlottie-react": "^0.14.0",
     "partysocket": "^1.0.0",
     "polotno": "^2.4.19",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-icons": "^5.5.0",
     "react-router-dom": "^7.6.1"
   },
   "devDependencies": {

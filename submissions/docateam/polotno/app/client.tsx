@@ -4,7 +4,7 @@ import { onPatch, applyPatch } from 'mobx-state-tree';
 import PartySocket from 'partysocket';
 import usePartySocket from 'partysocket/react';
 import { PolotnoContainer, SidePanelWrap, WorkspaceWrap } from 'polotno';
-importimport { ZoomButtons } from 'polotno/toolbar/zoom-buttons';
+import { ZoomButtons } from 'polotno/toolbar/zoom-buttons';
 import { SidePanel, DEFAULT_SECTIONS } from 'polotno/side-panel';
 import { Workspace } from 'polotno/canvas/workspace';
 
@@ -70,14 +70,16 @@ export const App = ({ store }: { store: StoreType }) => {
 
   return (
     <PolotnoContainer style={{ width: '100vw', height: '100vh' }}>
-      <SidePanelWrap>
+      <SidePanelWrap style={{ zIndex: '11' }}>
         <SidePanel store={store}
                    sections={[CustomSyncedProjects, TextSection, ElementsSection, CustomPhotosSection, SizeSection]}
                    defaultSection="synced-projects" />
       </SidePanelWrap>
       <WorkspaceWrap>
         <CustomToolbar store={store} downloadButtonEnabled />
-    </WorkspaceWrap>
+        <Workspace store={store} />
+        <ZoomButtons store={store} />
+      </WorkspaceWrap>
     </PolotnoContainer>
   );
 };
