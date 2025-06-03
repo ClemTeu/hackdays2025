@@ -58,11 +58,11 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   return (
     <>
       <Head>
-        <title>Slides</title>
-        <link rel="icon" href="/images/favicon-light.png" type="image/png" />
+        <title>Prez</title>
+        <link rel="icon" href="/images/logo-icon-old-2.svg" type="image/png" />
         <link
           rel="icon"
-          href="/images/favicon-light.png"
+          href="/images/logo-icon-old-2.svg"
           type="image/png"
           media="(prefers-color-scheme: light)"
         />

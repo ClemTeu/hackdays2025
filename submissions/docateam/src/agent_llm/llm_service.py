@@ -8,6 +8,7 @@ from fastapi import FastAPI, HTTPException, Query
 from langchain_core.prompts import PromptTemplate
 from openai import OpenAI
 from pydantic import BaseModel
+from fastapi.middleware.cors import CORSMiddleware
 
 from .prompt_template import complete_template, format_attendu, prompt_generic2
 
@@ -20,6 +21,12 @@ client = OpenAI(
 
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Autorise toutes les origines
+    allow_methods=["*"],  # Autorise toutes les méthodes (GET, POST, OPTIONS, etc.)
+    allow_headers=["*"],  # Autorise tous les en-têtes
+)
 
 class LLMRequest(BaseModel):
     prompt: str

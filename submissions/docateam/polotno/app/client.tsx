@@ -70,8 +70,10 @@ export const App = ({ store }: { store: StoreType }) => {
 
   return (
     <PolotnoContainer style={{ width: '100vw', height: '100vh' }}>
-      <SidePanelWrap>
-        <SidePanel store={store} sections={[CustomSyncedProjects, TextSection, ElementsSection, CustomPhotosSection, SizeSection]} />
+      <SidePanelWrap style={{ zIndex: '11' }}>
+        <SidePanel store={store}
+                   sections={[CustomSyncedProjects, TextSection, ElementsSection, CustomPhotosSection, SizeSection]}
+                   defaultSection="synced-projects" />
       </SidePanelWrap>
       <WorkspaceWrap>
         <CustomToolbar store={store} downloadButtonEnabled />

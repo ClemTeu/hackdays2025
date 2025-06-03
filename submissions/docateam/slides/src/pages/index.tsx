@@ -8,7 +8,7 @@ import {
   MainLayout,
   HomeGutter,
 } from "@gouvfr-lasuite/ui-kit";
-import { login, useAuth } from "@/features/auth/Auth";
+import { useAuth } from "@/features/auth/Auth";
 import { gotoLastVisitedItem } from "@/features/explorer/utils/utils";
 import { useEffect } from "react";
 import logoIcon from "@/assets/logo-icon.svg";
@@ -24,9 +24,11 @@ import {
   Toaster,
   ToasterItem,
 } from "@/features/ui/components/toaster/Toaster";
+import { useRouter } from "next/router";
 export default function HomePage() {
   const { t } = useTranslation();
   const { user } = useAuth();
+  const router = useRouter();
 
   useEffect(() => {
     if (user) {
@@ -60,14 +62,20 @@ export default function HomePage() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.png" />
       </Head>
-
       <HomeGutter>
         <Hero
-          logo={<img src={logoIcon.src} alt="DocLogo" width={64} />}
+          logo={<img src={logoIcon.src} alt="DocLogo" width={150} />}
           banner={banner.src}
           title={t("home.title")}
           subtitle={t("home.subtitle")}
-          mainButton={<ProConnectButton onClick={login} />}
+          mainButton={
+            <ProConnectButton
+              onClick={() => {
+                localStorage.setItem("fakeLoginActive", "true");
+                router.push("/works");
+              }}
+            />
+          }
         />
       </HomeGutter>
       <Footer />
