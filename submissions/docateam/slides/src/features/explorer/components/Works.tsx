@@ -49,8 +49,8 @@ export const Works = () => {
               <h3 className="font-medium">Slides Docaposte</h3>
               <div className="flex items-center gap-2 text-sm text-gray-600">
                 <span>Créé par Charlotte</span>
-                <span>•</span>
-                <span>Édité à l'instant</span>
+                <span> • </span>
+                <span>Édité à l instant</span>
               </div>
               <div className="flex gap-1 mt-2">
                 <span className="badge-ai">AI</span>
@@ -102,7 +102,7 @@ export const Works = () => {
               <div className="flex items-center gap-2 text-sm text-gray-600">
                 <span>Créé par Charlotte</span>
                 <span>•</span>
-                <span>Édité à l'instant</span>
+                <span>Édité à l instant</span>
               </div>
               <div className="flex gap-1 mt-2">
                 <span className="badge-ai">AI</span>
@@ -115,7 +115,7 @@ export const Works = () => {
               <div className="flex items-center gap-2 text-sm text-gray-600">
                 <span>Créé par Charlotte</span>
                 <span>•</span>
-                <span>Édité à l'instant</span>
+                <span>Édité à l instant</span>
               </div>
               <div className="flex gap-1 mt-2">
                 <span className="badge-ai">AI</span>

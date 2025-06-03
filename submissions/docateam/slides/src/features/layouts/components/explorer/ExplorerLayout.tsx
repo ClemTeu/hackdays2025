@@ -12,7 +12,7 @@ import { useRouter } from "next/router";
 import { ExplorerRightPanelContent } from "@/features/explorer/components/right-panel/ExplorerRightPanelContent";
 import { GlobalLayout } from "../global/GlobalLayout";
 import { useEffect } from "react";
-import { WorksRightPanelContent } from "@/features/explorer/components/right-panel/WorksRightPanelContent";
+// import { WorksRightPanelContent } from "@/features/explorer/components/right-panel/WorksRightPanelContent";
 
 export const getGlobalExplorerLayout = (page: React.ReactElement) => {
   return <GlobalExplorerLayout>{page}</GlobalExplorerLayout>;

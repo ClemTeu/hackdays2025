@@ -8,7 +8,7 @@ import {
   MainLayout,
   HomeGutter,
 } from "@gouvfr-lasuite/ui-kit";
-import { login, useAuth } from "@/features/auth/Auth";
+import { useAuth } from "@/features/auth/Auth";
 import { gotoLastVisitedItem } from "@/features/explorer/utils/utils";
 import { useEffect } from "react";
 import logoIcon from "@/assets/logo-icon.svg";
