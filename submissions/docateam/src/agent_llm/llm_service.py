@@ -1,3 +1,4 @@
+import ast
 import json
 import os
 import re
@@ -8,12 +9,7 @@ from langchain_core.prompts import PromptTemplate
 from openai import OpenAI
 from pydantic import BaseModel
 
-from .prompt_template import (
-    json_exemple,
-    last_slide_template,
-    prompt_generic,
-    slide1_template,
-)
+from .prompt_template import complete_template, format_attendu, prompt_generic2
 
 load_dotenv()
 
@@ -52,11 +48,9 @@ async def generate_json_text(
     )
 ):
     try:
-        prompt_template = PromptTemplate.from_template(prompt_generic)
+        prompt_template = PromptTemplate.from_template(prompt_generic2)
         final_prompt = prompt_template.format(
-            slide2_template=json_exemple,
-            slide1_template=slide1_template,
-            last_slide_template=last_slide_template,
+            format_attendu=format_attendu,
             client_request=client_request,
         )
         print("[LOG] Prompt envoyé au LLM:\n", final_prompt)
@@ -65,19 +59,22 @@ async def generate_json_text(
             messages=[{"role": "user", "content": final_prompt}],
         )
         content = response.choices[0].message.content
-        extract_json = re.search(r"({.*})", content, re.DOTALL)
-        if extract_json:
-            final_output = extract_json.group(1)
+        try:
+            extract_json = re.search(r"{.*}", content, re.DOTALL)
+            final_output = extract_json.group(0)
             try:
                 json_obj = json.loads(final_output)
-                return json_obj
-            except Exception:
-                return final_output
-        else:
-            print("[LOG] Aucun JSON valide trouvé dans la réponse de l'IA.")
+            except json.JSONDecodeError:
+                json_obj = ast.literal_eval(final_output)
+            rendered = complete_template.substitute(json_obj)
+            parsed_json = json.loads(rendered)
+            return parsed_json
+        except Exception as e:
+            print(f"[LOG] Erreur lors du traitement : {e}")
+            print("[LOG] Contenu brut :", content)
             raise HTTPException(
                 status_code=500,
-                detail="Aucun JSON valide trouvé dans la réponse de l'IA.",
+                detail=f"Erreur lors du traitement : {e}\nContenu brut : {content}",
             )
     except Exception as e:
         print("[LOG] Erreur lors de la génération:", str(e))
