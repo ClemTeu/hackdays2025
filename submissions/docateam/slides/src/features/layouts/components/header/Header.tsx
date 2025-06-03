@@ -9,7 +9,7 @@ import { useAuth, logout } from "@/features/auth/Auth";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ExplorerSearchButton } from "@/features/explorer/components/ExplorerSearchButton";
-import { getDriver } from "@/features/config/Config";
+// import { getDriver } from "@/features/config/Config";
 import { useRouter } from "next/router";
 
 export const Header = () => {
@@ -76,7 +76,7 @@ export const LanguagePicker = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { i18n } = useTranslation();
   const { user } = useAuth();
-  const driver = getDriver();
+  // const driver = getDriver();
   const [selectedValues, setSelectedValues] = useState([
     user?.language || i18n.language,
   ]);
@@ -96,7 +96,7 @@ export const LanguagePicker = () => {
           console.error("Error changing language", err);
         });
         if (user) {
-          driver.updateUser({ language: value, id: user.id });
+          // driver.updateUser({ language: value, id: user.id });
         }
       }}
       selectedValues={selectedValues}
